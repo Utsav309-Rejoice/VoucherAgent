@@ -155,8 +155,17 @@ def get_feature_of_user(user_id, feature):
         print('Users CSV not found.')
         return None
 
+def get_token_vouchertype(token_id):
+    """Returns the voucher ID of the token given the token ID."""
+    tokens_df = pd.read_csv('dummydata/tokens.csv')
+    token = tokens_df.loc[tokens_df['TokenID'] == token_id]
+    if not token.empty:
+        vouchertype = token['VoucherType'].values[0]
+        return vouchertype
+    return f"No VoucherType for this token."
+
 def check_user_token(email, token_id):
-    """Given the email id of a user and a token ID, checks wether the user owns the particular token."""
+    """Given the email id of a user and a token ID, checks whether the user owns the particular token."""
     users_df = pd.read_csv('dummydata/users.csv')
     user = users_df.loc[users_df['Mail'] == email]
     
@@ -221,8 +230,8 @@ def recover_lost_token(email):
     
 def ask_user_email():
     """Asks the user for their email if we are not aware of that."""
-    email = input("Please enter your email for verification:(for example can use: bob@example.com or alice@example.com)")
-    return email
+    with st.chat_message("assistant"):
+        st.markdown("Please enter your mail.")    
 
 AskEmailTool = FunctionTool.from_defaults(fn=ask_user_email)
 GetTokenTool = FunctionTool.from_defaults(fn=recover_lost_token)
@@ -233,10 +242,10 @@ Ownership = FunctionTool.from_defaults(fn=check_user_token)
 
 prompt_for_react_agent = f"""You are an intelligent voucher assistant. You have access to the following tools:
 Your goal is to assist the user with queries related to vouchers, tokens, and purchases by calling the correct tools and formulating a user-friendly response.
-Each user can have a list of tokens. Tokens are an instance of a vocher type with a specific code. The voucher tool gets the details of the voucher type.
+
 ### How to respond:
 1. If the user query relates to a specific voucher, token, or purchase, analyze the query and decide which tool(s) to use.
-2. Use the user's email if the user is asking about personal tokens or vouchers. Ask for their email using **AskEmailTool**. Once they have entred the email remeber it until they want to change or enter a different value for email.
+2. Use the user's email if the user is asking about personal tokens or vouchers. Ask for their email using **AskEmailTool**. Once they have entred the email remember it until they want to change or enter a different value for email.
 3. If the user asks about the conditions or applicability of a voucher, use **VoucherTool** to retrieve the conditions.
 4. If the user asks about the expiry of a voucher, use **ExpiryTool** to check if the voucher is expired.
 5. If the user has lost a token, use **GetTokenTool** after verification.
