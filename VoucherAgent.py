@@ -201,6 +201,19 @@ def get_voucher_conditions(voucher_id):
         return conditions
     return f"No conditions for using the voucher {voucher_id}"
 
+def get_all_vouchers():
+    """Returns the details of all the vouchers in the dataset."""
+    vouchers_df = pd.read_csv('dummydata/vouchers.csv')
+    return vouchers_df
+
+def get_particular_voucher(voucher_id):
+    """Given the voucher ID, returns the details for a particular voucher."""
+    vouchers_df = pd.read_csv('dummydata/vouchers.csv')
+    voucher = vouchers_df.loc[vouchers_df['VoucherID'] == voucher_id]
+    if not voucher.empty:
+        return voucher
+    return f"Voucher not found for {voucher_id}"
+
 def verify_user(email):
     """Verifies the identify of the user by checking the email provided by the user. If user exists it returns all the details of the user."""
     users_df = pd.read_csv('dummydata/users.csv')
@@ -236,9 +249,12 @@ def ask_user_email():
 AskEmailTool = FunctionTool.from_defaults(fn=ask_user_email)
 GetTokenTool = FunctionTool.from_defaults(fn=recover_lost_token)
 VerificationTool = FunctionTool.from_defaults(fn=verify_user)
-VoucherTool = FunctionTool.from_defaults(fn=get_voucher_conditions)
+VoucherConditionTool = FunctionTool.from_defaults(fn=get_voucher_conditions)
 ExpiryTool = FunctionTool.from_defaults(fn=check_voucher_expiry)
 Ownership = FunctionTool.from_defaults(fn=check_user_token)
+VoucherFromTokenTool = FunctionTool.from_defaults(fn=get_token_vouchertype)
+GetAllVoucherTool = FunctionTool.from_defaults(fn=get_all_vouchers)
+GetOneVoucherTool = FunctionTool.from_defaults(fn=get_particular_voucher)
 
 prompt_for_react_agent = f"""You are an intelligent voucher customer support assistant.
 Your goal is to assist the user with queries related to vouchers, tokens, and purchases by calling the correct tools and formulating a user-friendly response.
@@ -249,7 +265,7 @@ Please formulate a proper answer. If you are missing an argument, you can reply 
 Now, please process the following query: "{{query}}".
 
 """
-agent = ReActAgent.from_tools(tools=[ExpiryTool,VoucherTool,GetTokenTool,VerificationTool,Ownership],llm=llm,verbose=True)
+agent = ReActAgent.from_tools(tools=[GetOneVoucherTool,GetAllVoucherTool,VoucherFromTokenTool,ExpiryTool,VoucherConditionTool,GetTokenTool,VerificationTool,Ownership],llm=llm,verbose=True)
 
 if query := st.chat_input("Ask about market-sentiments?"):
     st.chat_message("user").markdown(query)
