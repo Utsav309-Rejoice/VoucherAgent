@@ -160,7 +160,7 @@ def get_token_vouchertype(token_id):
     tokens_df = pd.read_csv('dummydata/tokens.csv')
     token = tokens_df.loc[tokens_df['TokenID'] == token_id]
     if not token.empty:
-        vouchertype = token['VoucherType'].values[0]
+        vouchertype = token['VoucherID'].values[0]
         return vouchertype
     return f"No VoucherType for this token."
 
