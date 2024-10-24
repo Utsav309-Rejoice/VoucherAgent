@@ -1,0 +1,5 @@
+Name,ID,Mail,token_list
+Alice,1,alice@example.com,"['TK45', 'TK9', 'TK62', 'TK55']"
+Bob,2,bob@example.com,"['TK21', 'TK40', 'TK48', 'TK54', 'TK35']"
+Charlie,3,charlie@example.com,"['TK13', 'TK12', 'TK15', 'TK3']"
+Dave,4,dave@example.com,"['TK32', 'TK59', 'TK4', 'TK29', 'TK39', 'TK18']"

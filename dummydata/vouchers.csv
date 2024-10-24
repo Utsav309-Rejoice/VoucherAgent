@@ -1,0 +1,22 @@
+VoucherID,VoucherType,Conditions,Status,Amount,MinPurchaseAmount
+1,Discount,Valid for electronics,Redeemed,45%,249
+2,Cashback,Valid on weekends,Active,33%,226
+3,GiftCard,Valid for all items,Redeemed,18%,436
+4,Promo,Valid for groceries,Redeemed,13%,60
+5,Buy1Get1,Valid on clothing,Expired,41%,379
+6,FreeShipping,Valid for books,Expired,28%,229
+7,EarlyAccess,Valid for furniture,Redeemed,49%,378
+8,LoyaltyPoints,Valid for home appliances,Redeemed,46%,334
+9,StudentDiscount,Valid for cosmetics,Redeemed,33%,66
+10,HolidaySpecial,Valid for sports equipment,Active,23%,401
+11,ReferralBonus,Valid for toys,Active,18%,338
+12,BirthdaySpecial,Valid for accessories,Expired,48%,440
+13,SeasonalDiscount,Valid for outdoor gear,Active,31%,254
+14,WelcomeGift,Valid for jewelry,Expired,5%,53
+15,FlashSale,Valid for footwear,Expired,22%,93
+16,Clearance,Valid for beauty products,Active,11%,487
+17,NewArrival,Valid for pet supplies,Redeemed,14%,250
+18,SpecialEvent,Valid for car accessories,Active,39%,136
+19,BundleOffer,Valid for office supplies,Active,39%,326
+20,ExclusiveOffer,Valid for travel gear,Redeemed,7%,398
+21,LimitedTime,Valid for kitchen appliances,Expired,29%,389
