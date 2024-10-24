@@ -240,21 +240,16 @@ VoucherTool = FunctionTool.from_defaults(fn=get_voucher_conditions)
 ExpiryTool = FunctionTool.from_defaults(fn=check_voucher_expiry)
 Ownership = FunctionTool.from_defaults(fn=check_user_token)
 
-prompt_for_react_agent = f"""You are an intelligent voucher assistant. You have access to the following tools:
+prompt_for_react_agent = f"""You are an intelligent voucher customer support assistant.
 Your goal is to assist the user with queries related to vouchers, tokens, and purchases by calling the correct tools and formulating a user-friendly response.
+Each user can use vouchers available to them. The user will have a set of tokens they can use. Each token id is mapped to a voucher. Each voucher has various details of usage. 
+Using your tools, you can extract data of the users, tokens, and vouchers.
+Please formulate a proper answer. If you are missing an argument, you can reply by asking the user about it if needed.
 
-### How to respond:
-1. If the user query relates to a specific voucher, token, or purchase, analyze the query and decide which tool(s) to use.
-2. Use the user's email if the user is asking about personal tokens or vouchers. Ask for their email using **AskEmailTool**. Once they have entred the email remember it until they want to change or enter a different value for email.
-3. If the user asks about the conditions or applicability of a voucher, use **VoucherTool** to retrieve the conditions.
-4. If the user asks about the expiry of a voucher, use **ExpiryTool** to check if the voucher is expired.
-5. If the user has lost a token, use **GetTokenTool** after verification.
-6. Respond clearly and explain the results of the tool's actions to the user.
-
-### Now, please process the following query: "{{query}}".
+Now, please process the following query: "{{query}}".
 
 """
-agent = ReActAgent.from_tools(tools=[AskEmailTool,ExpiryTool,VoucherTool,GetTokenTool,VerificationTool,Ownership],llm=llm,verbose=True)
+agent = ReActAgent.from_tools(tools=[ExpiryTool,VoucherTool,GetTokenTool,VerificationTool,Ownership],llm=llm,verbose=True)
 
 if query := st.chat_input("Ask about market-sentiments?"):
     st.chat_message("user").markdown(query)
