@@ -212,7 +212,8 @@ def get_particular_voucher(voucher_id):
     voucher = vouchers_df.loc[vouchers_df['VoucherID'] == voucher_id]
     if not voucher.empty:
         return voucher
-    return f"Voucher not found for {voucher_id}"
+    else:
+        return f"Voucher not found for {voucher_id}"
 
 def verify_user(email):
     """Verifies the identify of the user by checking the email provided by the user. If user exists it returns all the details of the user."""
