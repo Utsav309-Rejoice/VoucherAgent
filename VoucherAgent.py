@@ -258,14 +258,16 @@ GetOneVoucherTool = FunctionTool.from_defaults(fn=get_particular_voucher)
 
 prompt_for_react_agent = f"""You are an intelligent voucher customer support assistant.
 Your goal is to assist the user with queries related to vouchers, tokens, and purchases by calling the correct tools and formulating a user-friendly response.
-Each user can use vouchers available to them. The user will have a set of tokens they can use. Each token id is mapped to a voucher. Each voucher has various details of usage. 
+Each user can own a certain set of vouchers which can be used for purchase. The user will have a set of tokens they can use. All the tokens have a token id. Each token id is mapped to a voucher. Each voucher has various details of usage. 
 Using your tools, you can extract data of the users, tokens, and vouchers.
 Please formulate a proper answer. If you are missing an argument, you can reply by asking the user about it if needed.
+If the user wants to ask something related to the set of tokens/vouchers they own, you can ask their email and get the user details from your tool.
+If the user asks a general query about the type of tokens and vouchers available you can directly access other tools and get the required data.
 
 Now, please process the following query: "{{query}}".
 
 """
-agent = ReActAgent.from_tools(tools=[GetOneVoucherTool,GetAllVoucherTool,VoucherFromTokenTool,ExpiryTool,VoucherConditionTool,GetTokenTool,VerificationTool,Ownership],llm=llm,verbose=True)
+agent = ReActAgent.from_tools(tools=[GetOneVoucherTool,GetAllVoucherTool,VoucherFromTokenTool,GetTokenTool,VerificationTool],llm=llm,verbose=True)
 
 if query := st.chat_input("Ask about market-sentiments?"):
     st.chat_message("user").markdown(query)
