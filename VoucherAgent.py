@@ -206,8 +206,8 @@ def get_all_vouchers():
     vouchers_df = pd.read_csv('dummydata/vouchers.csv')
     return vouchers_df
 
-def get_particular_voucher(voucher_id):
-    """Given the voucher ID, returns the details for a particular voucher."""
+def get_particular_voucher(voucher_id: int):
+    """Given the voucher ID (integer), returns all the details for a particular voucher."""
     vouchers_df = pd.read_csv('dummydata/vouchers.csv')
     voucher = vouchers_df.loc[vouchers_df['VoucherID'] == voucher_id]
     if not voucher.empty:
