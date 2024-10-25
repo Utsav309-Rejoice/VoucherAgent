@@ -155,14 +155,16 @@ def get_feature_of_user(user_id, feature):
         print('Users CSV not found.')
         return None
 
-def get_token_vouchertype(token_id):
-    """Returns the voucher ID of the token given the token ID."""
+def get_token_vouchertype(token_id_list:list[int]):
+    """When a list of token IDs is provided, returns a list of corresponding voucher IDs, it does not add a voucher ID for a token ID if the token does not eist in our database."""
     tokens_df = pd.read_csv('dummydata/tokens.csv')
-    token = tokens_df.loc[tokens_df['TokenID'] == token_id]
-    if not token.empty:
-        vouchertype = token['VoucherID'].values[0]
-        return vouchertype
-    return f"No VoucherType for this token."
+    voucher_id_list = []
+    for token_id in token_id_list:
+        token = tokens_df.loc[tokens_df['TokenID'] == token_id]
+        if not token.empty:
+            vouchertype = token['VoucherID'].values[0]
+            voucher_id_list.append({token_id:vouchertype})
+    return voucher_id_list
 
 def check_user_token(email, token_id):
     """Given the email id of a user and a token ID, checks whether the user owns the particular token."""
@@ -206,14 +208,15 @@ def get_all_vouchers():
     vouchers_df = pd.read_csv('dummydata/vouchers.csv')
     return vouchers_df
 
-def get_particular_voucher(voucher_id: int):
-    """Given the voucher ID (integer), returns all the details for a particular voucher."""
+def get_particular_voucher(voucher_id_list: list[int]):
+    """Given the list of voucher IDs(integer), returns all the details for each voucher. It appends the list with the voucher details only if that voucher id exists in our database."""
     vouchers_df = pd.read_csv('dummydata/vouchers.csv')
-    voucher = vouchers_df.loc[vouchers_df['VoucherID'] == voucher_id]
-    if not voucher.empty:
-        return voucher
-    else:
-        return f"Voucher not found for {voucher_id}"
+    voucher_list = []
+    for voucher_id in voucher_id_list:
+        voucher = vouchers_df.loc[vouchers_df['VoucherID'] == voucher_id]
+        if not voucher.empty:
+            voucher_list.append(voucher)
+    return voucher_list
 
 def verify_user(email):
     """Verifies the identify of the user by checking the email provided by the user. If user exists it returns all the details of the user."""
