@@ -155,7 +155,7 @@ def get_feature_of_user(user_id, feature):
         print('Users CSV not found.')
         return None
 
-def get_token_vouchertype(token_id_list:list[int]):
+def get_token_vouchertype(token_id_list:list):
     """When a list of token IDs is provided, returns a list of corresponding voucher IDs, it does not add a voucher ID for a token ID if the token does not eist in our database."""
     tokens_df = pd.read_csv('dummydata/tokens.csv')
     voucher_id_list = []
