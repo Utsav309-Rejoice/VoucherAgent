@@ -273,7 +273,7 @@ Now, please process the following query: "{{query}}".
 """
 agent = ReActAgent.from_tools(tools=[GetOneVoucherTool,GetAllVoucherTool,VoucherFromTokenTool,GetTokenTool,VerificationTool],llm=llm,verbose=True)
 
-if query := st.chat_input("Ask about market-sentiments?"):
+if query := st.chat_input("Ask about tokens?"):
     st.chat_message("user").markdown(query)
     
     response = agent.chat(prompt_for_react_agent.format(query=query))
