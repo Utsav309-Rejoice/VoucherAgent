@@ -12,6 +12,13 @@ open_ai_api_key = st.secrets["OPEN_AI"]
 
 llm = OpenAI(api_key=open_ai_api_key,model="gpt-4o",temperature=0.2)
 
+st.markdown("""Voucher chatbot:
+Answers user queries on various types of vouchers and their usage details (conditions for use, discount amount, purchase amount,etc).
+It also answers tokens purchased by the user and give personalized response based on it.
+Contains a dataset of 3 tables: users, vouchers and tables.
+Each user have a set of tokens. Each token has a token id and the token id maps to a voucher type.
+The voucher table contains all kinds of vouchers available and details on each of them(ID,Type,ConditionsStatus,Amount,MinPurchaseAmount).
+""")
 def add_user(name, user_id, mail, token_list=None):
     try:
         users = pd.read_csv('dummydata/users.csv')
