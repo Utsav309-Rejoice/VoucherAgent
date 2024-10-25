@@ -267,7 +267,7 @@ Using your tools, you can extract data of the users, tokens, and vouchers.
 Please formulate a proper answer. If you are missing an argument, you can reply by asking the user about it if needed.
 If the user wants to ask something related to the set of tokens/vouchers they own, you can ask their email and get the user details from your tool.
 If the user asks a general query about the type of tokens and vouchers available you can directly access other tools and get the required data.
-
+TIP: If you have an operation that is very iterative, you can pass on inputs together as a list in some of the functions if they allow it.
 Now, please process the following query: "{{query}}".
 
 """
